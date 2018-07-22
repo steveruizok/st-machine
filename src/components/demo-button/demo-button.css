@@ -1,0 +1,11 @@
+demo-button {
+  /* Component styles go here */
+}
+
+.hovered {
+  filter: brightness(150%);
+}
+
+.on {
+  background: #555;
+}

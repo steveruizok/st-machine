@@ -1,0 +1,8 @@
+st-button {
+  /* Component styles go here */
+}
+
+.hovered {
+  -webkit-filter: brightness(120%);
+  filter: brightness(120%);
+}

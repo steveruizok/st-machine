@@ -1,7 +1,12 @@
 import { MState, MStateMap, MSubscriber, MStep, MTransition } from "./types";
 
 // TODO:
-// substate history
+// substate history: add a history prop (boolean) to MState;
+// if prop is true, then when transitioning states within a state,
+// update the parent state's initial property to the new state, so
+// that when the machine switches back into that state, it restores
+// the last state that was active within it (rather than the first
+// or initial state).
 
 // State Machine
 
@@ -40,7 +45,7 @@ export default class StateMachine {
     this.states = stateMap.states;
 
     // get our initial state
-    const initial = stateMap.initial
+    let initial = stateMap.initial
       ? this.states.find(s => s.name === stateMap.initial)
       : this.states[0];
 
@@ -48,6 +53,12 @@ export default class StateMachine {
       throw new Error(
         `Could not find a state with that name (${stateMap.initial}`
       );
+    }
+
+    if (initial.states) {
+      initial = initial.initial
+        ? initial.states.find(s => s.name === initial.initial)
+        : initial.states[0];
     }
 
     // start the history array
@@ -191,6 +202,30 @@ export default class StateMachine {
     return true;
   };
 
+  // @method pathIncludes
+  // Returns true if the machine's current path includes any of one or more values.
+  //
+  // @param stateNames: string|string[] - The state name(s) to check.
+  public pathIncludes = (stateNames: string | string[]) => {
+    if (!Array.isArray(stateNames)) {
+      stateNames = [stateNames];
+    }
+
+    let includes;
+
+    for (let stateName of stateNames) {
+      includes = this.current.path.find(s => {
+        return s.name === stateName;
+      });
+    }
+
+    if (includes) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   // @method is
   // Returns true if the machine's current state name is any of one or more values.
   //
@@ -286,6 +321,7 @@ export default class StateMachine {
   //
   // @param stateName: string - The name of the state.
   private getState = (stateName: string) => {
+    let root;
     let foundState;
     const stateTree = this.current.path.slice().reverse();
 
@@ -308,6 +344,7 @@ export default class StateMachine {
     // If we couldn't find a state in the stateTree, search again
     // at the root level.
     if (!foundState) {
+      root = true;
       foundState = this.states.find(s => s.name === stateName);
     }
 
@@ -316,6 +353,8 @@ export default class StateMachine {
     if (!foundState) {
       throw new Error("Could not find a state with that name.");
     }
+
+    root;
 
     // If the new state has states of its own, change to the initial
     // state -- or, if not specified, to the first state in the
@@ -335,7 +374,27 @@ export default class StateMachine {
   // @param transition: MTransition - The action/response dispatched.
   // @param payload: any - The data attached to the dispatch.
   private setState = (transition: MTransition, payload: any) => {
-    const nextState = this.getState(transition.response);
+    let nextState;
+
+    if (transition.response.includes(".")) {
+      let stateTree = transition.response.split(".");
+
+      let foundState: any = this;
+      let i = 0;
+
+      while (i < stateTree.length) {
+        foundState = foundState.states.find(s => s.name === stateTree[i]);
+        i++;
+      }
+
+      if (!foundState) {
+        throw new Error("Could not find a state with that name.");
+      }
+
+      nextState = foundState;
+    } else {
+      nextState = this.getState(transition.response);
+    }
 
     const newDate = new Date();
     this.history[this.hIndex].duration =

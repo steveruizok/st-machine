@@ -10,7 +10,8 @@ export interface MSubscriber {
 
 export interface MState {
   name: string;
-  transitions: MTransition[];
+  initial?: string;
+  transitions?: MTransition[];
   states?: MState[];
   path?: MState[];
 }

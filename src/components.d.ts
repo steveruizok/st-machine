@@ -68,6 +68,39 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface AppMachineStatus {
+      'machine': any;
+    }
+  }
+
+  interface HTMLAppMachineStatusElement extends StencilComponents.AppMachineStatus, HTMLStencilElement {}
+
+  var HTMLAppMachineStatusElement: {
+    prototype: HTMLAppMachineStatusElement;
+    new (): HTMLAppMachineStatusElement;
+  };
+  interface HTMLElementTagNameMap {
+    'app-machine-status': HTMLAppMachineStatusElement;
+  }
+  interface ElementTagNameMap {
+    'app-machine-status': HTMLAppMachineStatusElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'app-machine-status': JSXElements.AppMachineStatusAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppMachineStatusAttributes extends HTMLAttributes {
+      'machine'?: any;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface AppProfile {
       'match': MatchResults;
     }
@@ -125,6 +158,39 @@ declare global {
   }
   namespace JSXElements {
     export interface AppRootAttributes extends HTMLAttributes {
+
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
+    interface DemoButton {
+
+    }
+  }
+
+  interface HTMLDemoButtonElement extends StencilComponents.DemoButton, HTMLStencilElement {}
+
+  var HTMLDemoButtonElement: {
+    prototype: HTMLDemoButtonElement;
+    new (): HTMLDemoButtonElement;
+  };
+  interface HTMLElementTagNameMap {
+    'demo-button': HTMLDemoButtonElement;
+  }
+  interface ElementTagNameMap {
+    'demo-button': HTMLDemoButtonElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'demo-button': JSXElements.DemoButtonAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface DemoButtonAttributes extends HTMLAttributes {
 
     }
   }
