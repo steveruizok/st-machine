@@ -200,6 +200,39 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface DemoTrafficLight {
+
+    }
+  }
+
+  interface HTMLDemoTrafficLightElement extends StencilComponents.DemoTrafficLight, HTMLStencilElement {}
+
+  var HTMLDemoTrafficLightElement: {
+    prototype: HTMLDemoTrafficLightElement;
+    new (): HTMLDemoTrafficLightElement;
+  };
+  interface HTMLElementTagNameMap {
+    'demo-traffic-light': HTMLDemoTrafficLightElement;
+  }
+  interface ElementTagNameMap {
+    'demo-traffic-light': HTMLDemoTrafficLightElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'demo-traffic-light': JSXElements.DemoTrafficLightAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface DemoTrafficLightAttributes extends HTMLAttributes {
+
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface StButton {
 
     }

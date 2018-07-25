@@ -21,6 +21,11 @@ export class AppRoot {
                 component="demo-button"
                 exact={true}
               />
+              <stencil-route
+                url="/traffic-light"
+                component="demo-traffic-light"
+                exact={true}
+              />
               <stencil-route url="/profile/:name" component="app-profile" />
             </stencil-route-switch>
           </stencil-router>

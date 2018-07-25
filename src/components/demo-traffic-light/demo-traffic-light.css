@@ -1,0 +1,28 @@
+demo-traffic-light {
+  /* Component styles go here */
+}
+
+.light {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  margin: 8px;
+  filter: saturate(60%) brightness(60%);
+}
+
+.red {
+  background: #fe0002;
+}
+
+.yellow {
+  background: #ffff02;
+}
+
+.green {
+  background: #3cb54c;
+}
+
+.on {
+  filter: saturate(100);
+}
