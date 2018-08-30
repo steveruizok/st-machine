@@ -4,7 +4,7 @@ const states = {
   initial: "off",
   states: [
     {
-      name: "off",
+      id: "off",
       transitions: [
         {
           action: "turn on",
@@ -13,12 +13,12 @@ const states = {
       ]
     },
     {
-      name: "on",
+      id: "on",
       initial: "normal",
       transitions: [{ action: "turn off", response: "off" }],
       states: [
         {
-          name: "normal",
+          id: "normal",
           transitions: [
             {
               action: "turbo",
@@ -27,7 +27,7 @@ const states = {
           ]
         },
         {
-          name: "turbo",
+          id: "turbo",
           transitions: [
             {
               action: "relax",

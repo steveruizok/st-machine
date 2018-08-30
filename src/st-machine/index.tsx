@@ -46,18 +46,18 @@ export default class StateMachine {
 
     // get our initial state
     let initial = stateMap.initial
-      ? this.states.find(s => s.name === stateMap.initial)
+      ? this.states.find(s => s.id === stateMap.initial)
       : this.states[0];
 
     if (!initial) {
       throw new Error(
-        `Could not find a state with that name (${stateMap.initial}`
+        `Could not find a state with that id (${stateMap.initial}`
       );
     }
 
     if (initial.states) {
       initial = initial.initial
-        ? initial.states.find(s => s.name === initial.initial)
+        ? initial.states.find(s => s.id === initial.initial)
         : initial.states[0];
     }
 
@@ -187,14 +187,14 @@ export default class StateMachine {
   // @method isnt
   // Returns false if the machine's current state name is any of one or more values.
   //
-  // @param stateNames: string|string[] - The state name(s) to check.
-  public isnt = (stateNames: string | string[]) => {
-    if (!Array.isArray(stateNames)) {
-      stateNames = [stateNames];
+  // @param stateIds: string|string[] - The state name(s) to check.
+  public isnt = (stateIds: string | string[]) => {
+    if (!Array.isArray(stateIds)) {
+      stateIds = [stateIds];
     }
 
-    for (let stateName of stateNames) {
-      if (this.current.name === stateName) {
+    for (let stateId of stateIds) {
+      if (this.current.id === stateId) {
         return false;
       }
     }
@@ -205,17 +205,17 @@ export default class StateMachine {
   // @method pathIncludes
   // Returns true if the machine's current path includes any of one or more values.
   //
-  // @param stateNames: string|string[] - The state name(s) to check.
-  public pathIncludes = (stateNames: string | string[]) => {
-    if (!Array.isArray(stateNames)) {
-      stateNames = [stateNames];
+  // @param stateIds: string|string[] - The state name(s) to check.
+  public pathIncludes = (stateIds: string | string[]) => {
+    if (!Array.isArray(stateIds)) {
+      stateIds = [stateIds];
     }
 
     let includes;
 
-    for (let stateName of stateNames) {
+    for (let stateId of stateIds) {
       includes = this.current.path.find(s => {
-        return s.name === stateName;
+        return s.id === stateId;
       });
     }
 
@@ -229,14 +229,14 @@ export default class StateMachine {
   // @method is
   // Returns true if the machine's current state name is any of one or more values.
   //
-  // @param stateNames: string|string[] - The state name(s) to check.
-  public is = (stateNames: string | string[]) => {
-    if (!Array.isArray(stateNames)) {
-      stateNames = [stateNames];
+  // @param stateIds: string|string[] - The state name(s) to check.
+  public is = (stateIds: string | string[]) => {
+    if (!Array.isArray(stateIds)) {
+      stateIds = [stateIds];
     }
 
-    for (let stateName of stateNames) {
-      if (this.current.name === stateName) {
+    for (let stateId of stateIds) {
+      if (this.current.id === stateId) {
         return true;
       }
     }
@@ -253,7 +253,7 @@ export default class StateMachine {
       return null;
     }
 
-    return { ...current, name: current.state.name, path: current.state.path };
+    return { ...current, id: current.state.id, path: current.state.path };
   }
 
   // @getter current
@@ -319,19 +319,19 @@ export default class StateMachine {
   // @method getState
   // Locate a state, given the state's name.
   //
-  // @param stateName: string - The name of the state.
-  private getState = (stateName: string) => {
+  // @param stateId: string - The name of the state.
+  private getState = (stateId: string) => {
     let root;
     let foundState;
     const stateTree = this.current.path.slice().reverse();
 
-    // At each state in the state tree, look for a state named stateName.
+    // At each state in the state tree, look for a state named stateId.
     for (let state of stateTree) {
       if (!state.states) {
         continue;
       }
 
-      let found = state.states.find(s => s.name === stateName);
+      let found = state.states.find(s => s.id === stateId);
 
       if (!found) {
         continue;
@@ -345,7 +345,7 @@ export default class StateMachine {
     // at the root level.
     if (!foundState) {
       root = true;
-      foundState = this.states.find(s => s.name === stateName);
+      foundState = this.states.find(s => s.id === stateId);
     }
 
     // And if we still haven't found one, throw an error, because
@@ -361,7 +361,7 @@ export default class StateMachine {
     // states array.
     if (foundState.states) {
       foundState = foundState.initial
-        ? foundState.states.find(s => s.name === foundState.initial)
+        ? foundState.states.find(s => s.id === foundState.initial)
         : foundState.states[0];
     }
 
@@ -383,7 +383,7 @@ export default class StateMachine {
       let i = 0;
 
       while (i < stateTree.length) {
-        foundState = foundState.states.find(s => s.name === stateTree[i]);
+        foundState = foundState.states.find(s => s.id === stateTree[i]);
         i++;
       }
 

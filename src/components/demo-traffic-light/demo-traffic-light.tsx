@@ -6,25 +6,25 @@ const stateMap: MStateMap = {
   initial: "red",
   states: [
     {
-      name: "red",
+      id: "red",
       initial: "walk",
       states: [
         {
-          name: "walk",
+          id: "walk",
           transitions: [{ action: "tick", response: "stop" }]
         },
         {
-          name: "stop",
+          id: "stop",
           transitions: [{ action: "tick", response: "wait" }]
         },
         {
-          name: "wait",
+          id: "wait",
           transitions: [{ action: "tick", response: "green" }]
         }
       ]
     },
     {
-      name: "green",
+      id: "green",
       transitions: [
         {
           action: "tick",
@@ -33,7 +33,7 @@ const stateMap: MStateMap = {
       ]
     },
     {
-      name: "yellow",
+      id: "yellow",
       transitions: [
         {
           action: "tick",
@@ -66,7 +66,7 @@ export class DemoTrafficLight {
     let green = "light green";
     let signalImgSrc = "/assets/signal_dont.png";
 
-    switch (Machine.current.name) {
+    switch (Machine.current.id) {
       case "yellow":
         yellow += " on";
         break;

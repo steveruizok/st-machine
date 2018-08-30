@@ -6,14 +6,14 @@ const stateMap: MStateMap = {
   initial: "off",
   states: [
     {
-      name: "off",
+      id: "off",
       states: [
         {
-          name: "default",
+          id: "default",
           transitions: [{ action: "hover", response: "hovered" }]
         },
         {
-          name: "hovered",
+          id: "hovered",
           transitions: [
             { action: "unhover", response: "off" },
             { action: "click", response: "on.hovered" }
@@ -22,14 +22,14 @@ const stateMap: MStateMap = {
       ]
     },
     {
-      name: "on",
+      id: "on",
       states: [
         {
-          name: "default",
+          id: "default",
           transitions: [{ action: "hover", response: "hovered" }]
         },
         {
-          name: "hovered",
+          id: "hovered",
           transitions: [
             { action: "unhover", response: "on" },
             { action: "click", response: "off.hovered" }
